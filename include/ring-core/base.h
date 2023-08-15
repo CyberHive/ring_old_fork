@@ -89,6 +89,12 @@
 #elif defined(__MIPSEL__) && defined(__LP64__)
 #define OPENSSL_64_BIT
 #define OPENSSL_MIPS64
+#elif defined(__MIPSEB__) && !defined(__LP64__)
+#define OPENSSL_32_BIT
+#define OPENSSL_MIPS
+#elif defined(__MIPSEB__) && defined(__LP64__)
+#define OPENSSL_64_BIT
+#define OPENSSL_MIPS64
 #elif defined(__s390x__)
 #define OPENSSL_64_BIT
 #define OPENSSL_S390X
@@ -118,9 +124,13 @@
 // `ring::c` would need to be customized on any platform where these assertions
 // fail. Keep in sync with `ring::c`.
 OPENSSL_STATIC_ASSERT(sizeof(int32_t) == sizeof(int), "int isn't 32 bits.");
-OPENSSL_STATIC_ASSERT(sizeof(uint32_t) == sizeof(unsigned int), "unsigned int isn't 32 bits.");
-OPENSSL_STATIC_ASSERT(sizeof(size_t) == sizeof(uintptr_t), "uintptr_t and size_t differ.");
-OPENSSL_STATIC_ASSERT(sizeof(size_t) <= sizeof(uint64_t), "size_t is larger than uint64_t.");
-OPENSSL_STATIC_ASSERT(sizeof(size_t) >= sizeof(uint32_t), "size_t is smaller than uint32_t.");
+OPENSSL_STATIC_ASSERT(sizeof(uint32_t) == sizeof(unsigned int),
+                      "unsigned int isn't 32 bits.");
+OPENSSL_STATIC_ASSERT(sizeof(size_t) == sizeof(uintptr_t),
+                      "uintptr_t and size_t differ.");
+OPENSSL_STATIC_ASSERT(sizeof(size_t) <= sizeof(uint64_t),
+                      "size_t is larger than uint64_t.");
+OPENSSL_STATIC_ASSERT(sizeof(size_t) >= sizeof(uint32_t),
+                      "size_t is smaller than uint32_t.");
 
 #endif  // OPENSSL_HEADER_BASE_H
